@@ -5,7 +5,7 @@ Work phase by phase. Do not start a phase until the previous phase's acceptance 
 ## Phase 0: Scaffold and environment
 
 - [x] Create the repo layout from `docs/ARCHITECTURE.md`. Use `uv` with `pyproject.toml` for each Python service, pinned versions.
-- [x] `.env.example`, `scripts/dev.sh`, `scripts/download_models.sh` (pulls Silero VAD, MiniLM, Kokoro, Parakeet/whisper weights into `models/`, then instructs to set offline env vars).
+- [x] `.env.example`, `scripts/dev.sh`, `scripts/download_models.sh` (pulls Silero VAD, MiniLM, Kokoro, and faster-whisper weights into `models/`, then instructs to set offline env vars).
 - [x] Smoke test: `ollama run phi4-mini` responds, and a tool-calling call via `http://localhost:11434/v1` returns a `tool_calls` entry. Record the result in `DECISIONS.md`.
 - [x] `docs/DECISIONS.md` created.
 
@@ -50,7 +50,7 @@ Work phase by phase. Do not start a phase until the previous phase's acceptance 
 ## Phase 5: Voice
 
 - [x] Silero VAD integration, with barge-in.
-- [x] ASR wrapper: Parakeet EOU first, with the `faster-whisper` fallback. Streaming, with EOU-driven turn ending.
+- [x] ASR wrapper: faster-whisper `small.en`, with Silero VAD turn ending.
 - [x] Kokoro TTS wrapper with sentence-level streaming.
 - [x] SmallWebRTC (or minimal audio WebSocket) transport, and the browser voice client.
 - [x] Latency taps and the latency panel.

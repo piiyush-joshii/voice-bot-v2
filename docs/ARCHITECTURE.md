@@ -70,7 +70,7 @@ ebpp-voice-poc/
 │   │       ├── pipeline.py            # builds the Pipecat pipeline
 │   │       ├── gate/                  # PaymentGate + state machine
 │   │       ├── processors/            # scrubber, router, metrics taps
-│   │       ├── services/              # asr_parakeet.py, asr_whisper.py, tts_kokoro.py, embedder.py
+│   │       ├── services/              # speech (faster-whisper, Kokoro), embedder.py
 │   │       ├── brain/                 # system prompt, tool schemas, tool executor
 │   │       ├── api/                   # sessions, debug WS, payment-events webhook
 │   │       └── logging_utils.py       # allowlisted structured logging
@@ -91,7 +91,7 @@ ebpp-voice-poc/
 # Models
 LLM_BASE_URL=http://localhost:11434/v1
 LLM_MODEL=phi4-mini
-ASR_BACKEND=parakeet            # parakeet | whisper
+ASR_BACKEND=whisper
 TTS_BACKEND=kokoro
 EMBED_MODEL=sentence-transformers/all-MiniLM-L6-v2
 KOKORO_VOICE=af_heart
@@ -109,9 +109,6 @@ VOICE_AGENT_URL=http://localhost:7860
 WEBHOOK_HMAC_SECRET=dev-only-change-me
 ```
 
-## Hardware notes (Apple Silicon M4)
+## Latency
 
-- Phi-4-mini Q4 via Ollama is roughly 2.5 GB and runs comfortably.
-- Kokoro-82M runs fine on CPU or MPS.
-- Parakeet is NeMo-based and CUDA-oriented. Try CPU first. If latency is too high or install fails, use `ASR_BACKEND=whisper` (faster-whisper, MIT) and record the decision in `docs/DECISIONS.md`. The `ASRService` interface makes this a config switch.
-- Latency targets (aspirational, measure and report): end-of-speech to first TTS audio under 1.5 s for router-handled turns, under 3 s for LLM turns.
+Targets to measure and report: end-of-speech to first TTS audio under 1.5 s for router-handled turns, under 3 s for language-model turns.

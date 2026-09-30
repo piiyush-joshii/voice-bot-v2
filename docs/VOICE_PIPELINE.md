@@ -6,7 +6,7 @@
 Transport.input()               # SmallWebRTC (local) for voice; WebSocket for text mode
   → SileroVAD                   # barge-in / interruption
   → PaymentGate                 # custom; drops user audio in SECURE_CAPTURE
-  → ASR (Parakeet EOU | faster-whisper)
+  → ASR (faster-whisper small.en)
   → TranscriptScrubber          # PAN/CVV backstop
   → IntentRouter                # MiniLM embeddings
   → user context aggregator
@@ -32,11 +32,9 @@ Each has a config-selected implementation. Provide a `FakeASR` and `FakeTTS` (te
 
 ## Model wrappers
 
-### ASR: Parakeet realtime EOU 120M
-- Load via NeMo (`nemo_toolkit[asr]`) or an ONNX export if available. Streaming inference with chunked audio at 16 kHz mono.
-- Use the model's end-of-utterance signal as the turn-end trigger. Silero VAD is still used for barge-in.
-- Check the model card license before finalizing.
-- **Fallback:** `faster-whisper` (`small.en`, int8, CPU) with VAD-based endpointing, behind `ASR_BACKEND=whisper`. Document why in `docs/DECISIONS.md` if used.
+### ASR: faster-whisper
+- `faster-whisper` `small.en`, int8, CPU, behind `ASR_BACKEND=whisper`.
+- Silero VAD marks the end of a turn and handles barge-in. Audio is 16 kHz mono.
 
 ### TTS: Kokoro-82M v1.0
 - Use the `kokoro` package (needs `espeak-ng`) or `kokoro-onnx`. Stream sentence by sentence to reduce time-to-first-audio. Output 24 kHz, resample if the transport requires.

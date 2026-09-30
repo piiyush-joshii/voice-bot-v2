@@ -3,8 +3,7 @@
 ASRService: pipecat STTService, audio frames in -> TranscriptionFrame out.
 TTSService: pipecat TTSService, text in -> audio frames out.
 
-Do not import pipecat.services.whisper.stt. On Apple Silicon that module imports
-mlx_whisper at import time, which we do not ship. faster-whisper is used directly.
+Do not import pipecat.services.whisper.stt. faster-whisper is used directly.
 """
 
 from __future__ import annotations
@@ -40,8 +39,7 @@ def build_asr(settings: Settings):
         return FasterWhisperASR(get_whisper_model(settings))
     if settings.asr_backend == "parakeet":
         raise RuntimeError(
-            "ASR_BACKEND=parakeet is not bundled: the Parakeet realtime EOU model needs NeMo (CUDA-oriented) "
-            "and its license is not Apache/MIT. Use ASR_BACKEND=whisper. See docs/DECISIONS.md."
+            "ASR_BACKEND=parakeet is not bundled. Use ASR_BACKEND=whisper."
         )
     if settings.asr_backend == "fake":
         return FakeASR()
@@ -70,7 +68,7 @@ def build_tts(settings: Settings):
 class FasterWhisperASR(SegmentedSTTService):
     """Consumes VAD segments as 16-bit PCM and emits one TranscriptionFrame per utterance.
 
-    Pipecat's WhisperSTTService is not used: importing it on macOS arm64 requires mlx_whisper.
+    Pipecat's WhisperSTTService is not used. This class calls faster-whisper directly.
     """
 
     def __init__(self, model, **kwargs):

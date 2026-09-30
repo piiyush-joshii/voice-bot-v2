@@ -14,12 +14,10 @@ Recorded while building the POC against `docs/TASKS.md`. Spec text remains the s
 - Default is `LLM_TOOL_MODE=json`: a schema-constrained prompt plus a parser (`OllamaJsonLLM`). The same `ToolExecutor` is used for both modes. Set `LLM_TOOL_MODE=native` to try native tool calls.
 - Temperature 0.2. Spoken replies stay 1–3 sentences via the system prompt and deterministic templates.
 
-## ASR: whisper, not Parakeet
+## ASR
 
-- NVIDIA Parakeet realtime EOU 120M is not Apache/MIT, and NeMo is CUDA-oriented. It is not installed.
-- Default `ASR_BACKEND=whisper` (`faster-whisper` `small.en`, int8, CPU) with Silero VAD endpointing. The `ASRService` factory still accepts `parakeet` and raises a clear error pointing here.
-- Pipecat 1.12 `WhisperSTTService` is not used. Importing `pipecat.services.whisper.stt` on Apple Silicon also imports `mlx_whisper`, which is not installed, and that crashed every voice session before ASR started. `FasterWhisperASR` calls `faster_whisper.WhisperModel` directly.
-- If a future Apache/MIT Parakeet export appears, swap it behind the same factory.
+- Default `ASR_BACKEND=whisper` (`faster-whisper` `small.en`, int8, CPU) with Silero VAD endpointing.
+- Pipecat `WhisperSTTService` is not used. `FasterWhisperASR` calls `faster_whisper.WhisperModel` directly.
 
 ## TTS
 
@@ -66,4 +64,3 @@ Recorded while building the POC against `docs/TASKS.md`. Spec text remains the s
 - Agent-assisted payments (warm transfer of a payment session).
 - LoRA / fine-tune of the tool schema on Phi-4-mini.
 - Side-by-side eval of SmolLM3-3B vs Phi-4-mini on `tests/e2e/dialogues`.
-- Apache/MIT streaming ASR with a native end-of-utterance head, if one appears.
