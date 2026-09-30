@@ -1,0 +1,10 @@
+{
+  "id": "wrong-verifier",
+  "name": "Wrong verifier then OTP",
+  "accountId": "ACC1001",
+  "steps": [
+    { "user": "Account ACC1001, verifier 9999", "expectState": "UNAUTHENTICATED" },
+    { "user": "Please send it by text message", "expectState": "UNAUTHENTICATED" },
+    { "user": "The code is 123456", "expectState": "AUTHENTICATED" }
+  ]
+}

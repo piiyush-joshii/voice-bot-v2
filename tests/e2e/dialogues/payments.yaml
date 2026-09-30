@@ -1,0 +1,151 @@
+- name: payment_happy_path_with_receipt
+  turns:
+    - user: "Hi"
+      expect_tools: []
+    - user: "My account is ACC1001 and my verifier is 4321"
+      expect_tools: [verify_identity]
+      expect_state: AUTHENTICATED
+    - user: "How much do I owe?"
+      expect_tools: [get_bill]
+    - user: "I'd like to pay it now"
+      expect_tools: [prepare_payment]
+      expect_state: PAYMENT_PENDING
+      expect_reply: "84\\.50"
+    - user: "Yes, go ahead"
+      expect_tools: [initiate_payment]
+      expect_state: SECURE_CAPTURE
+    - card: {pan: "4111 1111 1111 1111", expiry: "12/30", cvv: "123"}
+      expect_state: PAYMENT_RESULT
+      expect_payment: succeeded
+    - user: "Email me the receipt please"
+      expect_tools: [send_receipt]
+      expect_state: AUTHENTICATED
+    - user: "What's my balance now?"
+      expect_tools: [get_bill]
+      expect_reply: "nothing|fully paid"
+  final_state: AUTHENTICATED
+
+- name: payment_declined
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "I want to pay my bill"
+      expect_tools: [prepare_payment]
+      expect_state: PAYMENT_PENDING
+    - user: "yes"
+      expect_tools: [initiate_payment]
+      expect_state: SECURE_CAPTURE
+    - card: {pan: "4000 0000 0000 0002", expiry: "12/30", cvv: "123"}
+      expect_state: PAYMENT_RESULT
+      expect_payment: failed
+    - user: "No thanks"
+      expect_tools: []
+      expect_state: AUTHENTICATED
+
+- name: payment_insufficient_funds_then_retry
+  turns:
+    - user: "Account ACC1003 verifier 5678"
+      expect_tools: [verify_identity]
+    - user: "Pay my balance"
+      expect_tools: [prepare_payment]
+      expect_reply: "210\\.00"
+    - user: "Yes"
+      expect_tools: [initiate_payment]
+    - card: {pan: "4000 0000 0000 9995", expiry: "12/30", cvv: "123"}
+      expect_payment: failed
+    - user: "Yes, I'll try another card"
+      expect_tools: [prepare_payment]
+      expect_state: PAYMENT_PENDING
+    - user: "Yes please"
+      expect_tools: [initiate_payment]
+      expect_state: SECURE_CAPTURE
+    - card: {pan: "4111 1111 1111 1111", expiry: "12/30", cvv: "123"}
+      expect_payment: succeeded
+      expect_state: PAYMENT_RESULT
+
+- name: payment_partial_amount
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "I want to pay 50 dollars toward my bill"
+      expect_tools: [prepare_payment]
+      expect_reply: "50\\.00"
+    - user: "Correct"
+      expect_tools: [initiate_payment]
+      expect_state: SECURE_CAPTURE
+
+- name: payment_caller_changes_mind
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "Let me pay my bill"
+      expect_tools: [prepare_payment]
+      expect_state: PAYMENT_PENDING
+    - user: "No, not now"
+      expect_tools: []
+      expect_state: AUTHENTICATED
+
+- name: payment_cancel_in_form
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "Pay my bill please"
+      expect_tools: [prepare_payment]
+    - user: "Yes"
+      expect_tools: [initiate_payment]
+      expect_state: SECURE_CAPTURE
+    - cancel: true
+      expect_state: PAYMENT_PENDING
+    - user: "Yes, let's try again"
+      expect_tools: [initiate_payment]
+      expect_state: SECURE_CAPTURE
+
+- name: payment_invalid_card_then_valid
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "I'd like to make a payment"
+      expect_tools: [prepare_payment]
+    - user: "Sure"
+      expect_tools: [initiate_payment]
+    - card: {pan: "4111 1111 1111 1112", expiry: "12/30", cvv: "123"}
+      expect_state: SECURE_CAPTURE
+    - card: {pan: "4111 1111 1111 1111", expiry: "12/30", cvv: "123"}
+      expect_payment: succeeded
+      expect_state: PAYMENT_RESULT
+
+- name: payment_nothing_due
+  turns:
+    - user: "Account ACC1002 verifier 1234"
+      expect_tools: [verify_identity]
+    - user: "I want to pay my bill"
+      expect_tools: [prepare_payment]
+      expect_state: AUTHENTICATED
+      expect_reply: "nothing due"
+
+- name: payment_status_after_success
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "Pay the full amount"
+      expect_tools: [prepare_payment]
+    - user: "Yes"
+      expect_tools: [initiate_payment]
+    - card: {pan: "5555 5555 5555 4444", expiry: "11/29", cvv: "321"}
+      expect_payment: succeeded
+    - user: "Did my payment go through?"
+      expect_tools: [get_payment_status]
+      expect_state: AUTHENTICATED
+
+- name: receipt_by_text
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "I want to pay my bill"
+      expect_tools: [prepare_payment]
+    - user: "Yes"
+      expect_tools: [initiate_payment]
+    - card: {pan: "4111 1111 1111 1111", expiry: "12/30", cvv: "123"}
+      expect_payment: succeeded
+    - user: "Send it by text"
+      expect_tools: [send_receipt]

@@ -1,0 +1,7 @@
+{
+  "id": "request-agent",
+  "name": "Request a human",
+  "steps": [
+    { "user": "I want to talk to a real person", "expectState": "HANDOFF" }
+  ]
+}

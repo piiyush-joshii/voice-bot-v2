@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+models/
+logs/
+services/backend-api/outbox.jsonl
+web/node_modules/
+web/dist/
+.DS_Store

@@ -1,0 +1,182 @@
+# Example utterances per intent for the MiniLM router (nearest-example cosine similarity).
+# Fast-path intents: request_agent, greeting, goodbye, bill_due_date, check_balance (when authenticated).
+# pay_bill is never fast-pathed.
+
+check_balance:
+  - how much do I owe
+  - what's my balance
+  - what is my current balance
+  - how much is my bill
+  - what do I owe this month
+  - tell me my bill amount
+  - what's the amount due
+  - how much is due on my account
+  - can you tell me my balance
+  - what's my current bill
+  - how much do I need to pay
+
+bill_due_date:
+  - when is my bill due
+  - what's the due date
+  - when do I have to pay by
+  - when is the payment due
+  - what date is my bill due
+  - when's my due date
+  - by when should I pay
+  - what's the deadline for my payment
+  - when is my next bill due
+
+bill_history:
+  - show me my past bills
+  - what were my last few bills
+  - can I hear my billing history
+  - how much did I pay last month
+  - what did I pay in previous months
+  - tell me about my previous bills
+  - my bill history please
+  - what were my bills over the last six months
+  - list my recent statements
+
+pay_bill:
+  - I want to pay my bill
+  - I'd like to make a payment
+  - pay my balance
+  - can I pay now
+  - let me pay what I owe
+  - make a payment please
+  - I need to pay my bill
+  - pay the full amount
+  - I want to pay 50 dollars
+  - can I pay part of my bill
+  - take a payment
+  - pay my electricity bill
+
+payment_status:
+  - did my payment go through
+  - what's the status of my payment
+  - was my payment successful
+  - did you get my payment
+  - check my payment status
+  - has my payment been processed
+  - is my payment complete
+  - confirm my last payment
+
+send_receipt:
+  - send me a receipt
+  - can I get a receipt by email
+  - text me the receipt
+  - email me a confirmation
+  - I'd like a receipt please
+  - send the confirmation to my phone
+  - can you email that to me
+  - send a receipt by sms
+
+request_agent:
+  - I want to talk to a person
+  - let me speak to an agent
+  - connect me to a human
+  - can I talk to someone
+  - transfer me to customer service
+  - I need a real person
+  - get me a representative
+  - agent please
+  - operator
+  - I'd like to speak with a human being
+  - put me through to support staff
+
+greeting:
+  - hello
+  - hi
+  - hey there
+  - good morning
+  - good afternoon
+  - hi there
+  - hello, is anyone there
+  - good evening
+
+goodbye:
+  - bye
+  - goodbye
+  - that's all thanks
+  - thank you, bye
+  - I'm done
+  - no that's everything
+  - have a nice day
+  - see you
+  - thanks, that's all I needed
+
+provide_identity:
+  - my account number is ACC1001
+  - account ACC1003 verifier 5678
+  - it's ACC1002
+  - the last four digits of my phone are 4321
+  - my verifier is 4321
+  - account one zero zero one
+  - my code is 123456
+  - the code is 1 2 3 4 5 6
+  - I'm account ACC1001 and the verifier is 4321
+  - send the code by text
+  - email me the code
+
+affirm:
+  - "yes"
+  - yes please
+  - yeah go ahead
+  - that's right
+  - correct
+  - sure
+  - yes that's correct
+  - please do
+  - okay
+  - confirm
+
+deny:
+  - "no"
+  - no thanks
+  - not now
+  - cancel that
+  - never mind
+  - don't do that
+  - that's wrong
+  - stop
+
+card_details:
+  - my card number is
+  - here is my credit card number
+  - the card is visa ending
+  - my security code is
+  - the expiry date on my card is
+  - let me read you my card
+  - can I just tell you my card number
+  - the cvv is
+
+faq_payment_methods:
+  - what payment methods do you accept
+  - can I pay with a credit card
+  - do you take debit cards
+  - can I pay by bank transfer
+  - which cards can I use
+  - do you accept american express
+  - how can I pay my bill
+
+faq_late_fee:
+  - is there a late fee
+  - what happens if I pay late
+  - how much is the late charge
+  - will I be charged for paying late
+  - what's the penalty for a late payment
+  - my bill is overdue what happens now
+
+faq_autopay:
+  - can I set up autopay
+  - how do I enroll in automatic payments
+  - can my bill be paid automatically
+  - how do I turn on auto pay
+  - is there a direct debit option
+
+faq_hours:
+  - what are your opening hours
+  - when is customer service open
+  - what time can I call an agent
+  - are you open on weekends
+  - what hours are agents available

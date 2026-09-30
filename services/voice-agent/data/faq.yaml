@@ -1,0 +1,13 @@
+# FAQ snippets injected into the LLM context when the router matches a faq_* intent.
+faq_payment_methods: >-
+  We accept Visa, Mastercard, American Express, and Discover credit and debit cards through the
+  secure payment form. Bank transfers can be set up on the website.
+faq_late_fee: >-
+  Payments received after the due date incur a 5 dollar late fee. Accounts more than 30 days
+  overdue may receive a disconnection notice.
+faq_autopay: >-
+  Autopay can be enabled on the website under Billing, then Automatic Payments. It charges the
+  saved card on the due date each month.
+faq_hours: >-
+  Human agents are available Monday to Friday, 8 AM to 8 PM, and Saturday 9 AM to 1 PM.
+  This assistant is available at any time.

@@ -1,0 +1,26 @@
+# Held-out utterances (not copies of data/intents.yaml). Label = expected intent.
+- {text: "what's outstanding on my account", intent: check_balance}
+- {text: "can you read me the amount I owe", intent: check_balance}
+- {text: "do I have a balance this month", intent: check_balance}
+- {text: "when do I need to pay this by", intent: bill_due_date}
+- {text: "is there a due date on that bill", intent: bill_due_date}
+- {text: "what did I get charged last quarter", intent: bill_history}
+- {text: "read my last three statements", intent: bill_history}
+- {text: "go ahead and charge my bill", intent: pay_bill}
+- {text: "I would like to settle what I owe", intent: pay_bill}
+- {text: "please take fifty dollars toward the bill", intent: pay_bill}
+- {text: "has that charge cleared yet", intent: payment_status}
+- {text: "I need proof of payment emailed", intent: send_receipt}
+- {text: "text me a confirmation", intent: send_receipt}
+- {text: "please get me a human agent", intent: request_agent}
+- {text: "I refuse to talk to a robot", intent: request_agent}
+- {text: "hey, good to reach you", intent: greeting}
+- {text: "all set, I'm hanging up", intent: goodbye}
+- {text: "account ACC1001 last four 4321", intent: provide_identity}
+- {text: "yep that's correct", intent: affirm}
+- {text: "no, cancel the payment", intent: deny}
+- {text: "I'll just read my visa number", intent: card_details}
+- {text: "do you take mastercard", intent: faq_payment_methods}
+- {text: "will I get fined if this is late", intent: faq_late_fee}
+- {text: "can you auto-draft my card each month", intent: faq_autopay}
+- {text: "when can I reach a person on Saturday", intent: faq_hours}

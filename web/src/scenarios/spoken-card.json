@@ -1,0 +1,9 @@
+{
+  "id": "spoken-card",
+  "name": "Spoken card attempt",
+  "accountId": "ACC1001",
+  "steps": [
+    { "user": "Account ACC1001 verifier 4321", "expectState": "AUTHENTICATED" },
+    { "user": "Can I just give you my card? It's 4111 1111 1111 1111", "expectState": "AUTHENTICATED", "expectReply": "secure form" }
+  ]
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Secure payment</title>
+  <link rel="stylesheet" href="/static/capture.css">
+</head>
+<body data-session-id="{{SESSION_ID}}" data-parent-origin="{{PARENT_ORIGIN}}">
+  <div class="banner" role="note">TEST MODE: never enter a real card. Use 4111 1111 1111 1111.</div>
+  <main>
+    <header>
+      <h1>Secure payment</h1>
+      <p class="amount">{{CURRENCY}} {{AMOUNT}} <span class="muted">for account {{ACCOUNT_ID}}</span></p>
+      <p class="muted" id="countdown" aria-live="polite"></p>
+    </header>
+
+    <form id="card-form" autocomplete="off" novalidate>
+      <label for="pan">Card number</label>
+      <input id="pan" name="pan" inputmode="numeric" autocomplete="off" maxlength="23" placeholder="4111 1111 1111 1111" spellcheck="false">
+
+      <div class="row">
+        <div>
+          <label for="expiry">Expiry (MM/YY)</label>
+          <input id="expiry" name="expiry" inputmode="numeric" autocomplete="off" maxlength="7" placeholder="12/30" spellcheck="false">
+        </div>
+        <div>
+          <label for="cvv">CVV</label>
+          <input id="cvv" name="cvv" type="password" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="123">
+        </div>
+      </div>
+
+      <div class="keypad" id="keypad" aria-label="On-screen keypad">
+        <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+        <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+        <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+        <button type="button" data-key="/">/</button><button type="button" data-key="0">0</button><button type="button" data-key="back" aria-label="Backspace">&#9003;</button>
+      </div>
+
+      <p id="error" class="error" role="alert" aria-live="assertive"></p>
+
+      <div class="actions">
+        <button type="submit" id="pay" class="primary">Pay {{CURRENCY}} {{AMOUNT}}</button>
+        <button type="button" id="cancel">Cancel</button>
+      </div>
+    </form>
+
+    <p id="result" class="result" role="status" aria-live="polite" hidden></p>
+  </main>
+  <script src="/static/capture.js"></script>
+</body>
+</html>

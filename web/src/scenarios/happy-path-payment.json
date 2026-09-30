@@ -1,0 +1,13 @@
+{
+  "id": "happy-path-payment",
+  "name": "Happy-path payment",
+  "accountId": "ACC1001",
+  "hint": "After the form opens, pay with 4111 1111 1111 1111 / 12/30 / 123.",
+  "steps": [
+    { "user": "Account ACC1001 verifier 4321", "expectState": "AUTHENTICATED" },
+    { "user": "How much do I owe?", "expectState": "AUTHENTICATED" },
+    { "user": "I'd like to pay it now", "expectState": "PAYMENT_PENDING" },
+    { "user": "Yes, go ahead", "expectState": "SECURE_CAPTURE" },
+    { "waitFor": "payment_result", "expectState": "PAYMENT_RESULT" }
+  ]
+}

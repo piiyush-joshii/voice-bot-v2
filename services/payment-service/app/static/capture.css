@@ -1,0 +1,38 @@
+:root {
+  --bg: #ffffff;
+  --fg: #16181d;
+  --muted: #666c78;
+  --border: #d4d7de;
+  --accent: #1f6feb;
+  --danger: #c62828;
+  --ok: #2e7d32;
+  --banner: #fff4cc;
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16181d; --fg: #eceef2; --muted: #9aa0ab; --border: #3a3f4a; --banner: #4a3b00; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); }
+.banner { background: var(--banner); padding: 6px 12px; font-size: 13px; font-weight: 600; text-align: center; }
+main { padding: 12px 16px 16px; max-width: 420px; margin: 0 auto; }
+h1 { font-size: 18px; margin: 4px 0; }
+.amount { font-size: 20px; font-weight: 600; margin: 4px 0; }
+.muted { color: var(--muted); font-size: 13px; font-weight: 400; }
+label { display: block; font-size: 13px; margin: 10px 0 4px; }
+input { width: 100%; padding: 9px 10px; font-size: 16px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: inherit; font-variant-numeric: tabular-nums; }
+input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+.keypad button { padding: 10px 0; font-size: 18px; }
+button { border: 1px solid var(--border); border-radius: 6px; background: transparent; color: inherit; cursor: pointer; padding: 9px 14px; font-size: 15px; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.actions { display: flex; gap: 8px; margin-top: 12px; }
+.actions .primary { flex: 1; }
+.error { color: var(--danger); min-height: 1.2em; font-size: 14px; margin: 8px 0 0; }
+.result { font-size: 16px; font-weight: 600; padding: 12px; border-radius: 6px; border: 1px solid var(--border); }
+.result.ok { color: var(--ok); }
+.result.fail { color: var(--danger); }

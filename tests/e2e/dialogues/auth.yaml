@@ -1,0 +1,79 @@
+# expect_tools: exact list of tools the turn must call ([] = none). expect_state: state after the turn.
+- name: auth_success_single_turn
+  turns:
+    - user: "My account number is ACC1001 and the last four digits of my phone are 4321"
+      expect_tools: [verify_identity]
+      expect_state: AUTHENTICATED
+  final_state: AUTHENTICATED
+
+- name: auth_two_turns
+  turns:
+    - user: "Hi, I need help with my bill"
+      expect_tools: []
+      expect_state: UNAUTHENTICATED
+    - user: "It's account ACC1003"
+      expect_tools: []
+    - user: "The last four digits are 5678"
+      expect_tools: [verify_identity]
+      expect_state: AUTHENTICATED
+
+- name: auth_wrong_verifier_then_otp_sms
+  turns:
+    - user: "Account ACC1001, verifier 9999"
+      expect_tools: [verify_identity]
+      expect_state: UNAUTHENTICATED
+      expect_reply: "code"
+    - user: "Please send it by text message"
+      expect_tools: [send_otp]
+    - user: "The code is 123456"
+      expect_tools: [verify_otp]
+      expect_state: AUTHENTICATED
+
+- name: auth_wrong_verifier_then_otp_email
+  turns:
+    - user: "My account is ACC1001 and my verifier is 1111"
+      expect_tools: [verify_identity]
+      expect_state: UNAUTHENTICATED
+    - user: "Email is fine"
+      expect_tools: [send_otp]
+    - user: "123456"
+      expect_tools: [verify_otp]
+      expect_state: AUTHENTICATED
+
+- name: auth_wrong_otp
+  turns:
+    - user: "Account ACC1001, verifier 0000"
+      expect_tools: [verify_identity]
+    - user: "Send me a code by sms"
+      expect_tools: [send_otp]
+    - user: "The code is 654321"
+      expect_tools: [verify_otp]
+      expect_state: UNAUTHENTICATED
+
+- name: auth_unknown_account
+  turns:
+    - user: "My account is ACC9999 and my verifier is 4321"
+      expect_tools: [verify_identity]
+      expect_state: UNAUTHENTICATED
+
+- name: bill_before_auth_is_refused
+  turns:
+    - user: "What's my balance?"
+      expect_tools: []
+      expect_state: UNAUTHENTICATED
+    - user: "I want to pay my bill"
+      expect_tools: []
+      expect_state: UNAUTHENTICATED
+
+- name: auth_spoken_digits
+  turns:
+    - user: "account A C C one zero zero one, verifier four three two one"
+      expect_tools: [verify_identity]
+      expect_state: AUTHENTICATED
+
+- name: auth_then_balance_same_turn
+  turns:
+    - user: "I'm ACC1001, verifier 4321. How much do I owe?"
+      expect_tools: [verify_identity, get_bill]
+      expect_state: AUTHENTICATED
+      expect_reply: "84\\.50"

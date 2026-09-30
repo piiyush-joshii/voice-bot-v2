@@ -1,0 +1,27 @@
+[project]
+name = "voice-agent"
+version = "0.1.0"
+description = "Pipecat voice/text agent with the payment gate for the EBPP voice POC"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "fastapi==0.142.1",
+    "httpx==0.28.1",
+    "kokoro-onnx==0.6.1",
+    "numpy==2.4.6",
+    "pipecat-ai[silero,webrtc,whisper]==1.12.0",
+    "pydantic==2.13.5",
+    "pyyaml==6.0.3",
+    "requests==2.34.2",
+    "sentence-transformers==6.1.0",
+    "uvicorn==0.54.0",
+    "websockets==15.0.1",
+]
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+    "pytest-asyncio==1.4.0",
+]

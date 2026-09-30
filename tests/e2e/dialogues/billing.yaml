@@ -1,0 +1,88 @@
+- name: balance_fast_path
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "How much do I owe?"
+      expect_tools: [get_bill]
+      expect_reply: "84\\.50"
+
+- name: due_date_fast_path
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "When is my bill due?"
+      expect_tools: [get_bill]
+      expect_reply: "October 15"
+
+- name: history
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "Can you tell me about my previous bills?"
+      expect_tools: [get_bill_history]
+      expect_reply: "August"
+
+- name: overdue_account
+  turns:
+    - user: "Account ACC1003 verifier 5678"
+      expect_tools: [verify_identity]
+    - user: "What's my current balance?"
+      expect_tools: [get_bill]
+      expect_reply: "210\\.00.*overdue"
+
+- name: nothing_due
+  turns:
+    - user: "Account ACC1002 verifier 1234"
+      expect_tools: [verify_identity]
+    - user: "How much do I owe?"
+      expect_tools: [get_bill]
+      expect_reply: "nothing due|fully paid"
+
+- name: faq_payment_methods
+  turns:
+    - user: "What payment methods do you accept?"
+      expect_tools: []
+      expect_reply: "visa|mastercard|card"
+
+- name: faq_late_fee
+  turns:
+    - user: "Account ACC1003 verifier 5678"
+      expect_tools: [verify_identity]
+    - user: "Is there a late fee if I pay after the due date?"
+      expect_tools: []
+      expect_reply: "5|late fee"
+
+- name: greeting_and_goodbye
+  turns:
+    - user: "Hello"
+      expect_tools: []
+      expect_reply: "account number"
+    - user: "Goodbye"
+      expect_tools: []
+      expect_reply: "goodbye|bye"
+
+- name: agent_handoff_unauthenticated
+  turns:
+    - user: "I want to talk to a real person"
+      expect_tools: [request_agent_handoff]
+      expect_state: HANDOFF
+  final_state: HANDOFF
+
+- name: agent_handoff_after_auth
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "Can you transfer me to customer service?"
+      expect_tools: [request_agent_handoff]
+      expect_state: HANDOFF
+    - user: "hello?"
+      expect_tools: []
+      expect_state: HANDOFF
+
+- name: off_script_question
+  turns:
+    - user: "Account ACC1001 verifier 4321"
+      expect_tools: [verify_identity]
+    - user: "What's the weather like today?"
+      expect_tools: []
+      expect_state: AUTHENTICATED

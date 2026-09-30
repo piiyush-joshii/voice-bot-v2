@@ -1,0 +1,12 @@
+{
+  "id": "decline",
+  "name": "Declined card",
+  "accountId": "ACC1001",
+  "hint": "When the form opens, use 4000 0000 0000 0002 / 12/30 / 123.",
+  "steps": [
+    { "user": "Account ACC1001 verifier 4321", "expectState": "AUTHENTICATED" },
+    { "user": "I want to pay my bill", "expectState": "PAYMENT_PENDING" },
+    { "user": "yes", "expectState": "SECURE_CAPTURE" },
+    { "waitFor": "payment_result", "expectState": "PAYMENT_RESULT" }
+  ]
+}
